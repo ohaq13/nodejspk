@@ -1,0 +1,5 @@
+-- start app in node
+node app
+
+start app in nodemon to automatically detec changes. 
+npx nodemon app

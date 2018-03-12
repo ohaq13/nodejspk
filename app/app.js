@@ -1,8 +1,9 @@
-var express = require('express');
-var bodyParser = require ('body-parser');
-var path = require ('path');
+const LISTEN_PORT = 3001
+const express = require('express');
+const bodyParser = require ('body-parser');
+const path = require ('path');
 
-var app = express();
+const app = express();
 
 /*
 var logger = (req, res, next)=>{
@@ -23,6 +24,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', (req, res)=>{
     res.send('Hello World')
 })
-app.listen(3001, ()=>{
-    console.log('Server Started on Port 3001');
+app.listen(LISTEN_PORT, ()=>{
+    console.log('Server Started on Port: ' + LISTEN_PORT);
 })

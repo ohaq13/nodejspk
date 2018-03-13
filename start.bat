@@ -1,1 +1,0 @@
-nodejs\npx nodemon app\app.js

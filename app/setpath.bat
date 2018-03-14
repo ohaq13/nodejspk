@@ -1,1 +1,1 @@
-set PATH=%PATH%;%cd%\nodejs\
+set PATH=%PATH%;%cd%\..\nodejs\

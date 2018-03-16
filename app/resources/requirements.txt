@@ -1,0 +1,22 @@
+View all account info 
+Grid, option to add account
+Searching
+
+FORM: ACCOUNT 
+*NAME:
+*ID:
+*TYPE: KOILA BHORA SOIL
+PHONE:
+PHONE2:
+NOTES
+
+Select account show account info and transactions
+GRID ACCOUNT TRANSACTIONS
+DATE, DEBIT, CREDIT, BALANCE
+
+Able to add/delete modify transactions
+FORM: TRANSACTION ENTRY FOR AN ACCOUNT
+DATE
+ID/BILTY/VEHICLE
+TRANSACTION TYPE DEBIT , CREDIT
+NOTES

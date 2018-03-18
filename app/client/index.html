@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>NODE JS PK</title>
+
+        <link href="thirdparty/select2-4.0.5/css/select2.min.css" rel="stylesheet" type="text/css" />
+
+        <script src="thirdparty/jquery-3.3.1.min.js" type="text/javascript"></script>
+        <script src="thirdparty/select2-4.0.5/js/select2.full.js" type="text/javascript"></script>
+        
+
+<script>
+$(document).ready(function() {
+    $('.js-example-basic-single').select2({width:"100%"});
+
+
+
+    $('.js-data-example-ajax').select2({
+        width:"100%",
+       // minimumInputLength:1,
+        ajax: {
+          url: '/api/getval',
+          dataType: 'json',
+          cache:false
+          // Additional AJAX parameters go here; see the end of this chapter for the full code of this example
+         }
+    });
+
+
+
+});
+
+
+</script>
+  </head>
+  <body>
+  <select class="js-example-basic-single" name="state" width="100px">
+  <option value="AL">Alabama</option>
+  <option value="WY">Wyoming</option>
+</select>
+
+<select class="js-data-example-ajax"></select>
+
+  </body>
+</html>

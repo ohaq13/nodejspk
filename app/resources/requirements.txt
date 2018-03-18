@@ -3,8 +3,8 @@ Grid, option to add account
 Searching
 
 FORM: ACCOUNT 
-*NAME:
 *ID:
+*NAME:
 *TYPE: KOILA BHORA SOIL
 PHONE:
 PHONE2:

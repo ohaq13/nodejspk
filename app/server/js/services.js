@@ -7,12 +7,17 @@ define(['customer'], function (Customer) {
         }
 
         initServices(){
-            let c = new Customer();
+            let customerService = new Customer();
 
-            this.app.get('/api/getval', (req, res)=>{
+            this.app.get('/api/customer/getCustomerByName', customerService.getCustomerByName1);
+            
+            this.app.get('/api/customer/getCustomerByName', (req, res)=>{
                 let param = "%" +req.query.q + "%";  
                   
-                c.dao.getCustomerByName([param], (err, data, count)=>{
+                customerService.getCustomerByName([param], (err, data, count)=>{
+                  if (err) {
+                    return res.send(err.message);
+                  }
                   res.json(data);
                 });   
             });

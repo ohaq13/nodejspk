@@ -12,8 +12,8 @@ define(['db'], function (db) {
             this.comments = '';
 
             this.dao = {
-                getValue: function (){
-                    console.log("~~~~~: " + db.select("%Emerita%"));
+                getCustomerByName: function (params, done){
+                    db.select("SELECT id, name FROM customer where name like ?", params, done); 
                 }
             }
             

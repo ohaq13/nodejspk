@@ -30,20 +30,22 @@ define(['sqlite3','module', 'path'], function (_sqlite3,module,path) {
         });
     }
 
-    function _select(query, obj){
-         _connect(MODE.OPEN_READONLY);
+    function _select(query, paramsArray, complete){
+        _connect(MODE.OPEN_READONLY);
 
         var data = {results:[]};
-        db.each("SELECT id, name FROM customer where name like '"+query+"'", (err, row) => {
+        db.each(query, paramsArray, (err, row) => {
             if (err) {
                 return console.error(err.message);
             }
         
              data.results.push(row);
-          }, ()=>{
-            console.log(data.results.length) 
-            return data;
-        },()=>{_close()});
+             
+        }, (err, count) => {
+            complete(err, data, count);
+        });
+
+        _close(); 
     }
 
     return {

@@ -20,14 +20,16 @@ requirejs.config({
     nodeRequire: require,
 
     paths:{
+      services: 'server/js/services',
       customer: 'common/js/customer',
       db: 'common/js/db',
 
     }
 });
 
-requirejs(['customer'],function(Customer) {
+requirejs(['services'],function(Services) {
   const app = express();
+  const services = new Services(app);
 
   // Body parser middle ware
   // parse application/json
@@ -42,9 +44,8 @@ requirejs(['customer'],function(Customer) {
   
   // render home page 
   app.get('/', (req, res)=>{res.render('index');})
- 
-  let c = new Customer();
-  console.log(c.dao.getValue());
+  
+  services.initServices();
 
   app.listen(LISTEN_PORT, ()=>{
     console.log('Server Started on Port: ' + LISTEN_PORT);

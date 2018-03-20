@@ -1,4 +1,4 @@
-define(['customer'], function (Customer) {
+define(['customerDao'], function (CustomerDao) {
     "use strict";
     
     class  Services {
@@ -7,14 +7,14 @@ define(['customer'], function (Customer) {
         }
 
         initServices(){
-            let customerService = new Customer();
+            // let customerService = new Customer();
 
-            this.app.get('/api/customer/getCustomerByName', customerService.getCustomerByName1);
+            this.app.get('/api/customer/getCustomerByName', CustomerDao.getCustomerByName1);
             
             this.app.get('/api/customer/getCustomerByName', (req, res)=>{
                 let param = "%" +req.query.q + "%";  
                   
-                customerService.getCustomerByName([param], (err, data, count)=>{
+                CustomerDao.getCustomerByName([param], (err, data, count)=>{
                   if (err) {
                     return res.send(err.message);
                   }

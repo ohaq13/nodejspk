@@ -20,9 +20,10 @@ requirejs.config({
     nodeRequire: require,
 
     paths:{
-      services: 'server/js/services',
-      customer: 'common/js/customer',
-      db: 'common/js/db',
+      services      : 'server/js/services',
+      customer      : 'common/js/customer',
+      customerDao   : 'common/js/customerDao',
+      db            : 'common/js/db',
 
     }
 });

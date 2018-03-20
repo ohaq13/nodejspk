@@ -1,16 +1,15 @@
-define(['db'], function (db) {
+define([], function () {
     "use strict";
     
     const FIELDS = {
-        id:"id",
-        name:"name",
-        type:"type",
-        phone:"phone",
-        phone2:"id",
-        address:"address",
-        comments:"comments",
-    };
-        
+            id:"id",
+            name:"name",
+            type:"type",
+            phone:"phone",
+            phone2:"id",
+            address:"address",
+            comments:"comments",
+        }
     class  Customer {
         constructor() {
             this[FIELDS.id]       = '';
@@ -20,30 +19,13 @@ define(['db'], function (db) {
             this[FIELDS.phone2]   = '';
             this[FIELDS.address]  = '';
             this[FIELDS.comments] = '';
-
-        }
- 
-        getCustomerByName1 (req, res){
-            let param = "%" +req.query.q + "%";                  
-            db.select(`SELECT id ${FIELDS.id}, name ${FIELDS.name}, name text FROM customer where name like ?`, [param], done); 
-
-            function done(err, data, count){
-                if (err) {
-                    return res.send(err.message);
-                }
-                
-                res.json(data);
-            }
-        }
-               
-        getCustomerByName (params, done){
-            db.select(`SELECT id ${FIELDS.id}, name ${FIELDS.name} FROM customer where name like ?`, params, done); 
         }
 
+        static get FIELDS() {
+            return FIELDS;
+        }
+        
      }
-
-    
-
 
     return Customer;
 });

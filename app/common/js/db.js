@@ -1,7 +1,8 @@
 
-define(['sqlite3','module', 'path'], function (_sqlite3,module,path) {
+define(['sqlite3', 'path'], function (_sqlite3,path) {
     "use strict";
-   console.log(path.dirname(module.uri));
+    
+    var db;
     const sqlite3 = _sqlite3.verbose();
     const DB_PATH = path.join(__dirname,'db','pk.db');
     const MODE = {  
@@ -9,29 +10,12 @@ define(['sqlite3','module', 'path'], function (_sqlite3,module,path) {
                     OPEN_READWRITE:sqlite3.OPEN_READWRITE, 
                     OPEN_CREATE:sqlite3.OPEN_CREATE
                  };
-    var db;
-   // _connect(MODE.OPEN_READONLY);
-    function _connect(mode){
-        db = new sqlite3.Database(DB_PATH, mode,  (err) => {
-            if (err) {
-               return console.error(err.message);
-            } 
-
-            console.log('Connected to database.');
-        });
-    }
-
-    function _close(){
-        db.close((err) => {
-          if (err) {
-            return console.error(err.message);
-          }
-          console.log('Close the database connection.');
-        });
-    }
+    
+    // Connect to database when server loads db.js
+    _connect(MODE.OPEN_READWRITE);
 
     function _select(query, paramsArray, complete){
-        _connect(MODE.OPEN_READONLY);
+//         _connect(MODE.OPEN_READONLY);
 
         var data = {results:[]};
         db.each(query, paramsArray, (err, row) => {
@@ -45,9 +29,33 @@ define(['sqlite3','module', 'path'], function (_sqlite3,module,path) {
             complete(err, data, count);
         });
 
-        _close(); 
+//         _close(); 
     }
 
+
+
+
+    function _connect(mode){
+        db = new sqlite3.Database(DB_PATH, mode,  (err) => {
+            if (err) {
+               return console.error(err.message);
+            } 
+
+            console.log('Connected to database.');
+        });
+    }
+
+    // This needs to be handled with Ctrl+C
+    function _close(){
+        db.close((err) => {
+          if (err) {
+            return console.error(err.message);
+          }
+          console.log('Close the database connection.');
+        });
+    }
+
+    
     return {
         select: _select
     }

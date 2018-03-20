@@ -28,27 +28,34 @@ requirejs.config({
 });
 
 requirejs(['services'],function(Services) {
-  const app = express();
-  const services = new Services(app);
-
-  // Body parser middle ware
-  // parse application/json
-  app.use(bodyParser.json());
-
-  // parse application/x-www-form-urlencoded
-  app.use(bodyParser.urlencoded({extended: false}));
-
-  // Set Static Path
-  app.use(express.static(path.join(__dirname)));
-  app.use(express.static(path.join(__dirname, 'common', 'html')));
+    const app = express();
+    const services = new Services(app);
   
-  // render home page 
-  app.get('/', (req, res)=>{res.render('index');})
+    // Body parser middle ware
+    // parse application/json
+    app.use(bodyParser.json());
   
-  services.initServices();
+    // View Engine
+    app.set('view engine', 'ejs'); 
+    app.set('views', path.join(__dirname, 'common', 'html'));
+    
 
-  app.listen(LISTEN_PORT, ()=>{
-    console.log('Server Started on Port: ' + LISTEN_PORT);
-  })
+    // parse application/x-www-form-urlencoded
+    app.use(bodyParser.urlencoded({extended: false}));
+  
+    // Set Static Path
+    app.use(express.static(path.join(__dirname)));
+    app.use(express.static(path.join(__dirname, 'common', 'html')));
+    
+    // render home page 
+    app.get('/', (req, res) => {
+      res.render('index', {nocache: Date.now()});
+    });
+    
+    services.initServices();
+  
+    app.listen(LISTEN_PORT, ()=>{
+      console.log('Server Started on Port: ' + LISTEN_PORT);
+    })
 
 });

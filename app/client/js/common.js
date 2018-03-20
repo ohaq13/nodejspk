@@ -1,6 +1,3 @@
-/*******************************************************************************
- * © Copyright IBM Corporation 2018
- ******************************************************************************/
 define(['moment','bootstrap'/*, 'areYouSure','datetimepicker'*/],function(moment){
 
 	"use strict"

@@ -1,6 +1,3 @@
-/*******************************************************************************
- * © Copyright IBM Corporation 2018
- ******************************************************************************/
 var LAST_LOAD_TIME = (new Date()).getTime(); //no cache, get time only once on application load.
 requirejs.config({
     urlArgs: "=_" + LAST_LOAD_TIME, // no-cache on page refresh

@@ -9,7 +9,7 @@ define(['customerDao'], function (CustomerDao) {
         initServices(){
             // let customerService = new Customer();
 
-            this.app.get('/api/customer/getCustomerByName', CustomerDao.getCustomerByName1);
+            this.app.get('/api/customer/getCustomerByName', CustomerDao..getCustomerByName1);
             
             this.app.get('/api/customer/getCustomerByName', (req, res)=>{
                 let param = "%" +req.query.q + "%";  

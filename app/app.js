@@ -24,7 +24,6 @@ requirejs.config({
       customer      : 'common/js/customer',
       customerDao   : 'common/js/customerDao',
       db            : 'common/js/db',
-
     }
 });
 
@@ -54,7 +53,7 @@ requirejs(['services'],function(Services) {
     });
     
     services.initServices();
-  
+    
     app.listen(LISTEN_PORT, ()=>{
       console.log('Server Started on Port: ' + LISTEN_PORT);
     })

@@ -21,10 +21,11 @@ define(['customer','db'], function (Customer, db) {
         static getCustomerByName(params, done){
             db.select(`SELECT id ${Customer.FIELDS.id}, name ${Customer.FIELDS.name} FROM customer where name like ?`, params, done); 
         }
+
+        static get ffff(){return 'd'}
         
      }
 
-  
 
     return CustomerDao;
 });

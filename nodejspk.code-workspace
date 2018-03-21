@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"requireModuleSupport.modulePath": ""
+		//"requireModuleSupport.modulePath": "../apps",
+		//"requireModuleSupport.configFile" : "app.js",
+		//"compilerOptions": {
+		//"target": "ES6",
+		//"module": "commonjs",
+		//}
+	}
+}

@@ -1,35 +1,38 @@
 "use strict";
 global.__dirname = __dirname;
 const LISTEN_PORT = 3001
-const requirejs = require('requirejs');
+// const requirejs = require('requirejs');
 const express = require('express');
-const bodyParser = require ('body-parser');
-const path = require ('path');
+const bodyParser = require('body-parser');
+const path = require('path');
+const Services = require(global.__dirname + '/server/js/services');
 
-requirejs.config({
-    //Use node's special variable __dirname to
-    //get the directory containing this file.
-    //Useful if building a library that will
-    //be used in node but does not require the
-    //use of node outside
-    baseUrl: __dirname,
+// const customerDao = require(__dirname+"/common/js/customerDao");
 
-    //Pass the top-level main.js/index.js require
-    //function to requirejs so that node modules
-    //are loaded relative to the top-level JS file.
-    nodeRequire: require,
+// requirejs.config({
+//     //Use node's special variable __dirname to
+//     //get the directory containing this file.
+//     //Useful if building a library that will
+//     //be used in node but does not require the
+//     //use of node outside
+//     baseUrl: __dirname,
 
-    paths:{
-      services      : 'server/js/services',
-      customer      : 'common/js/customer',
-      customerDao   : 'common/js/customerDao',
-      db            : 'common/js/db',
-    }
-});
+//     //Pass the top-level main.js/index.js require
+//     //function to requirejs so that node modules
+//     //are loaded relative to the top-level JS file.
+//     nodeRequire: require,
 
-requirejs(['services'],function(Services) {
+//     paths:{
+//       services      : 'server/js/services',
+//       customer      : 'common/js/customer',
+//       customerDao   : 'common/js/customerDao',
+//       db            : 'common/js/db',
+//     }
+// });
+
+// requirejs(['services'],function(Services) {
     const app = express();
-    const services = new Services(app);
+    const services = new Services(app); 
   
     // Body parser middle ware
     // parse application/json
@@ -58,4 +61,4 @@ requirejs(['services'],function(Services) {
       console.log('Server Started on Port: ' + LISTEN_PORT);
     })
 
-});
+// });

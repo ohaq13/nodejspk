@@ -1,6 +1,6 @@
 "use strict";
 
-const CustomerDao = require(global.__dirname+"/common/js/customerDao");
+const CustomerDao = require(requireConfig.paths.customerDao);
 
 class  Services {
     constructor(app) {

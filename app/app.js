@@ -1,11 +1,13 @@
 "use strict";
 global.__dirname = __dirname;
+global.requireConfig = require(__dirname + '/server/js/requireConfig')
+
 const LISTEN_PORT = 3001
 // const requirejs = require('requirejs');
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
-const Services = require(global.__dirname + '/server/js/services');
+const Services = require(requireConfig.paths.services);
 
 // const customerDao = require(__dirname+"/common/js/customerDao");
 

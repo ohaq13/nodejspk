@@ -9,6 +9,7 @@ const FIELDS = {
         address:"address",
         comments:"comments",
     }
+
 class  Customer {
     constructor() {
         this[FIELDS.id]       = '';
@@ -23,8 +24,7 @@ class  Customer {
     static get FIELDS() {
         return FIELDS;
     }
-    
-    }
+}
 
 module.exports =  Customer;
 

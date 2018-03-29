@@ -2,9 +2,9 @@
 
 const PATHS = {
     services      : global.__dirname + '/server/js/services',
-    customer      : global.__dirname + '/common/js/customer',
-    customerDao   : global.__dirname + '/common/js/customerDao',
-    db            : global.__dirname + '/common/js/db',
+    customer      : global.__dirname + '/server/js/customer',
+    customerDao   : global.__dirname + '/server/js/customerDao',
+    db            : global.__dirname + '/server/js/db',
 }
 
 class  RequireConfig {

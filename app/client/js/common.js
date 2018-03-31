@@ -1,15 +1,9 @@
-define(['moment','bootstrap'/*, 'areYouSure','datetimepicker'*/],function(moment){
+define(['moment','bootstrap', 'const'/*, 'areYouSure','datetimepicker'*/],function(moment){
 
 	"use strict"
 	var now=new Date().getTime();
 	var common =
 	{
-		AjaxRequestTracker:
-		{
-				noOfRequest:0,
-				noOfResponce:0,
-		},
-		lastInteractionTime: now,
 		UNAUTHORIZED: 'You are not authorized to perform this action.',
 		loadCount:0,
 		alertTimeout: 0,
@@ -21,30 +15,8 @@ define(['moment','bootstrap'/*, 'areYouSure','datetimepicker'*/],function(moment
 			}
 			
 			this.showWait();
-			if (window.adf!=undefined && $.trim(window.adf.alerts)!="" && $('#otherAlertsDiv').length < 1 ) {
-				this.showOtherAlerts($("#pageTitle").parent(),$.trim(window.adf.alerts));
-			}
+
 			this.checkInitLoadingComplete(callbackInitDone);
-		},
-		removeSelectValue:function(key,id){
-			$('#'+id+' option[value="'+key+'"]').remove();
-		},
-		checkSpecialCharacters:function(){
-			var specialCharacterFlag = true;
-			$('form input , form textarea').each(
-				    function(index){  
-						var inputValue = $(this).val();
-						//console.log('Type: ' + input.attr('type') + 'Name: ' + input.attr('name') + 'Value: ' + input.val());
-						if(inputValue.indexOf('"')!=-1){
-							$(this).parent().addClass('has-error');
-							specialCharacterFlag = false;
-						}else{
-							$(this).parent().removeClass('has-error');
-						}
-					}
-				);
-			
-			return  specialCharacterFlag;
 		},
 		checkInitLoadingComplete: function(callbackInitDone)
 		{
@@ -122,21 +94,10 @@ define(['moment','bootstrap'/*, 'areYouSure','datetimepicker'*/],function(moment
 			
 			if (all)
 			{
-				//$('.modal .fade').modal('hide'); //https://github.com/twbs/bootstrap/issues/11793
+				$('.modal .fade').modal('hide'); //https://github.com/twbs/bootstrap/issues/11793
 				$('.modal').modal('hide');
 			}
 			
-		},
-		populateFilter: function(data) // obsolete 
-		{
-			var da = 
-			$.map(data, 
-				function(v, i)
-				{
-					return $('<option>', { disabled:data[i].disabled, selected:data[i].selected, val: data[i].id, text: data[i].text }); 
-				})
-				
-			return da;
 		},
 		Dialog:{
 			gethtmlObj: function()
@@ -150,18 +111,13 @@ define(['moment','bootstrap'/*, 'areYouSure','datetimepicker'*/],function(moment
 				buildDialogHTML.push('	<div class="modal-dialog">                                                                                                                                                         ');
 				buildDialogHTML.push('		<div class="modal-content">                                                                                                                                                    ');
 				buildDialogHTML.push('			<div class="modal-header">                                                                                                                                                 ');
-				buildDialogHTML.push('				<!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></button>-->');
-				buildDialogHTML.push('				<h4 class="modal-title">Modal title</h4>                                                                                                                               ');
+				buildDialogHTML.push('				<h5 class="modal-title">Modal title</h5>                                                                                                                               ');
 				buildDialogHTML.push('			</div>                                                                                                                                                                     ');
 				buildDialogHTML.push('			<div class="modal-body"></div>                                                                                                                                             ');
 				buildDialogHTML.push('			<div class="modal-footer">                                                                                                                                                 ');
-				buildDialogHTML.push('				<!--<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->                                                                             ');
-				buildDialogHTML.push('				<!--<button type="button" class="btn btn-primary">Save changes</button>-->                                                                                             ');
 				buildDialogHTML.push('			</div>                                                                                                                                                                     ');
 				buildDialogHTML.push('		</div>                                                                                                                                                                         ');
-				buildDialogHTML.push('		<!-- /.modal-content -->                                                                                                                                                       ');
 				buildDialogHTML.push('	</div>                                                                                                                                                                             ');
-				buildDialogHTML.push('	<!-- /.modal-dialog -->                                                                                                                                                            ');
 				buildDialogHTML.push('</div>                                                                                                                                                                               ');
 
 				return {id:uniqueId, html:buildDialogHTML.join("")};
@@ -213,12 +169,12 @@ define(['moment','bootstrap'/*, 'areYouSure','datetimepicker'*/],function(moment
 					}
 				});
 
-				var buttons = $('<span>');
+				var buttons = [];
 				$.each(buttonsArray, function( i, v)
 				{
 					var button;
 					button = $('<button/>', v);
-					buttons.append(button);
+					buttons.push(button);
 				});
 	
 				$('#'+dialogID).find(".modal-footer").html(buttons);
@@ -434,8 +390,8 @@ define(['moment','bootstrap'/*, 'areYouSure','datetimepicker'*/],function(moment
 			
 			// When alert is closed using close button then fade out. 
 			$($html).on('close.bs.alert', function (){
-					$($html).addClass("fade out");
-				})
+				$($html).addClass("fade out");
+			})
 				
 			// Only show last error, close others
 			// using nth selector does not work as expected with class's
@@ -445,9 +401,7 @@ define(['moment','bootstrap'/*, 'areYouSure','datetimepicker'*/],function(moment
 			{
 				alertsToKeep = keepAlertCount;
 			}
-			
-			//var $alerts = $("div.alert:nth-last-child(n+" + (alertsToKeep+1) + ")"); // get all except the no passed in // not workig in some cases.
-			
+						
 			var $alerts = $($.grep($("div.alert"), function (value, index){return index < $("div.alert").length - alertsToKeep})); // get all except the no passed in
 			
 			// keep messages other than the last one up for couple of seconds then hide
@@ -484,93 +438,9 @@ define(['moment','bootstrap'/*, 'areYouSure','datetimepicker'*/],function(moment
 				}, LAST_ALERT_TIMEOUT);
 			}
 		},
-		showOtherAlerts: function($id, message,scrollTop)
-		{
-			var me = this;
-			var alertClass = 'col-sm-12 alert alert-info alert-dismissible';
-			var heading = 'Information';
-						
-			var $html = "";
-			if($('#mainContainerSubPage').length >= 1){
-				$html = $.parseHTML(
-						"<span id='otherAlertsDiv' style='margin-top:5px' class='" +alertClass+"' role='alert'> " +
-						"  <button type='button' class='close' data-dismiss='alert' aria-label='Close'>" +
-						"  <span aria-hidden='true'>&times;</span></button>" +
-						"  <h1>" + heading + "</h1>" +
-						"  <span>" +message +"</span>"+
-						"</span>");
-			}else{
-				$html = $.parseHTML(
-						"<div id='otherAlertsDivWrap' class='col-sm-12'><span id='otherAlertsDiv' style='margin-top:5px' class='" +alertClass+"' role='alert'> " +
-						"  <button type='button' class='close' data-dismiss='alert'>" +
-						"  <span aria-hidden='true'>&times;</span></button>" +
-						"  <h1>" + heading + "</h1>" +
-						"  <span>" +message +"</span>"+
-						"</span></div>");
-			}
-			$id.prepend($html);
-			
-			if(scrollTop != false)
-			{
-				window.scrollTo(0, 0); // scroll to top so that user can see the message
-			}
-			
-			// When alert is closed using close button then fade out. 
-			$($html).on('close.bs.alert', function (){
-				$($html).addClass("fade out");
-				window.adf.alerts ="";
-				$("#otherAlertsDivWrap").hide();
-			})		
-		},
-		hasAlerts: function (alertData)
-		{
-			var noOfErrors = alertData.errorMessages.messages.length + alertData.warningMessages.messages.length + alertData.infoMessages.messages.length;
-			
-			if ( noOfErrors > 0)
-			{
-				return true
-			}
-			
-			return false
-		},
-		showAlerts: function($id, alertData)
-		{
-			// This is introduced to show multiple alerts, works well with 
-			// alerts sent by server side from Java Class AlertMessages
-			// Example  com.truven.adf.mdss.gui.service.MediaManagement.removeFile
-			var me = this;
-			var alertTypeCount = 0;
-			var errors = alertData.errorMessages.messages;
-			var success = alertData.successMessages.messages;
-			var infos = alertData.infoMessages.messages;
-			var warnings = alertData.warningMessages.messages;
-			
-			alertTypeCount = (errors.length > 0) ? ++alertTypeCount : alertTypeCount;
-			alertTypeCount = (success.length > 0) ? ++alertTypeCount : alertTypeCount;
-			alertTypeCount = (infos.length > 0) ? ++alertTypeCount : alertTypeCount;
-			alertTypeCount = (warnings.length > 0) ? ++alertTypeCount : alertTypeCount;
-
-			showAlertByType(success, 's', alertTypeCount);
-			showAlertByType(infos, 'i', alertTypeCount);
-			showAlertByType(warnings, 'w', alertTypeCount);
-			showAlertByType(errors, 'e', alertTypeCount);
-			
-			function showAlertByType(alertMessages, type, showCount)
-			{
-				if (alertMessages.length > 0)
-				{
-					me.showAlert($id, type, alertMessages.join("<br>"), null, null, showCount);
-				}
-			}
-			
-		},
 		hideAlerts:function()
 		{
 			$("div.alert").alert("close");
-		},
-		setPageSubTitle: function(title, key, name)
-		{
-			$("#pageSubTitle").html(title + ": " + (($.trim(key) != '') ?(key + " - "):"") + name);
 		},
 		ajaxCall: function(obj) {
 			return jQuery.ajax({
@@ -602,18 +472,8 @@ define(['moment','bootstrap'/*, 'areYouSure','datetimepicker'*/],function(moment
 				'method': 'GET',
 			})
 		},
-		getJSONSync: function(url, data, callback) {
-			return this.ajaxCall({
-				'url': encodeURI(url),
-				'success': callback,
-				'data': data,
-				'method': 'GET',
-				'async': false,
-			})
-		},
 		util: 
 		{
-			SELECT2_MISSING: "Loading ...",
 		    initShowHideNav: function ()
 			{
 				var showHideClass= "nav-closed";
@@ -630,29 +490,6 @@ define(['moment','bootstrap'/*, 'areYouSure','datetimepicker'*/],function(moment
 					$("#subContainer" ).removeClass("col-sm-9").addClass("col-sm-12");
 					$(".toc-nav").hide("fast");
 				}
-			},
-			setSelect2Ajax: function($element, data){
-				var key = data.key;
-				var text =  data.text;
-				
-				// if page refresh or manage page clicked again, populate the drop down with default selection
-				if ($element.find("option[value="+key+"]").length  == 0){ // element does not exist
-					var option = new Option(text, key, true, true);
-					$element.append(option);
-					return $element.trigger('change');  // trigger change event to load details.
-				}
-				// clicked on grid or from quick search, name not known, so this is triggered from setformdata.
-				else if ($element.val() == key && $element.find("option:selected").text().trim().indexOf(this.SELECT2_MISSING) != -1){  
-					$element.find("option[value="+key+"]").remove();
-					var option = new Option(text, key, true, true);
-					$element.append(option);
-					return $element.trigger('change.select2'); // do not trigger change event only update select2
-				}
-				else if ($element.val() != key){ // item already exists in drop down select and call change, make sure value is different than key otherwise unfinite loop
-					return $element.val(key).trigger('change');
-				}
-				
-				return $element;
 			},
 			hideDropDown: function hideDropDown(){
 				// if a select2 drop down is open the position gets misaligned 

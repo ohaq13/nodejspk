@@ -8,6 +8,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const Services = require(requireConfig.paths.services);
+const Pages = require(requireConfig.paths.pages);
 
 // const customerDao = require(__dirname+"/common/js/customerDao");
 
@@ -35,6 +36,7 @@ const Services = require(requireConfig.paths.services);
 // requirejs(['services'],function(Services) {
     const app = express();
     const services = new Services(app); 
+    const pages = new Pages(app); 
   
     // Body parser middle ware
     // parse application/json
@@ -52,11 +54,10 @@ const Services = require(requireConfig.paths.services);
     app.use(express.static(path.join(__dirname)));
     app.use(express.static(path.join(__dirname, 'common', 'html')));
     
-    // render home page 
-    app.get('/', (req, res) => {
-      res.render('index', {nocache: Date.now()});
-    });
-    
+    // home pages etc
+    pages.initPages();
+
+    // rest api
     services.initServices();
     
     app.listen(LISTEN_PORT, ()=>{

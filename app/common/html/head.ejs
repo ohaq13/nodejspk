@@ -1,14 +1,11 @@
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="">
-<meta name="author" content="">
-<link rel="icon" href="/client/css/favicon.ico">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/client/css/favicon.ico">
 
-<title>Sticky Footer Navbar Template for Bootstrap</title>
-
-<meta charset="UTF-8">
-<title>NODE JS PK</title>
+    <title></title>
 
     <link href="/client/thirdparty/select2-4.0.5/css/select2.min.css?_=<%= nocache %>" rel="stylesheet" type="text/css" />
     <link href="/client/thirdparty/bootstrap-4.0.0/css/bootstrap.min.css?_=<%= nocache %>" rel="stylesheet" type="text/css" />
@@ -16,32 +13,4 @@
     
     <script src="/client/thirdparty/require-2.3.5.min.js"></script>
     <script src="/client/js/requirejs.config.js?_=<%= nocache %>"></script>
-
-<script>
-require(['common', 'select2'/*'moment','bootstrap', 'areYouSure','datetimepicker'*/],function(){
-// console.log(new c())
-$(document).ready(function() {
-    $('.js-example-basic-single').select2({width:"100%"});
-
-
-
-    $('.js-data-example-ajax').select2({
-        width:"100%",
-        minimumInputLength:1,
-        ajax: {
-          delay: 100,
-          url: '/api/customer/getCustomerByName',
-          dataType: 'json',
-          cache:false
-          // Additional AJAX parameters go here; see the end of this chapter for the full code of this example
-        }
-    });
-
-
-
-});
-
-});
-
-</script>
 </head>
